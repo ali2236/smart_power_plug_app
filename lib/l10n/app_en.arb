@@ -1,0 +1,15 @@
+{
+  "powerOutlets" : "Power Outlets",
+  "powerOutlet" : "Power Outlet",
+  "newX" : "New {name}",
+  "invalidDeviceId" : "Device not found!",
+  "someError" : "Something went wrong!",
+  "delete" : "Delete",
+  "deviceId" : "Device ID",
+  "scan" : "Scan",
+  "add" : "Add",
+  "home" : "Home",
+  "charts" : "Charts",
+  "schedules" : "Schedules",
+  "settings" : "Settings"
+}

@@ -11,7 +11,9 @@ class AddDevicePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceId = TextEditingController();
+    final deviceId = TextEditingController(
+      text: 'a3c4be60-deaa-11ed-871f-977f44fb0ae5',
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(context.strings.newX(context.strings.powerOutlet)),

@@ -11,5 +11,8 @@
   "home" : "Home",
   "charts" : "Charts",
   "schedules" : "Schedules",
-  "settings" : "Settings"
+  "settings" : "Settings",
+  "realtime" : "Real-Time",
+  "power" : "Power",
+  "maxCurrent" : "Max Current"
 }

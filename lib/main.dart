@@ -9,6 +9,7 @@ import 'package:thingsboard_client/thingsboard_client.dart';
 final getIt = GetIt.instance;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter(null);
 

@@ -1,6 +1,8 @@
 import 'package:custom_smart_power_plug_app/l10n/strings.dart';
+import 'package:custom_smart_power_plug_app/models/extension_device.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_device_telemetry.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:thingsboard_client/thingsboard_client.dart';
 
 enum _DisplayData {
@@ -111,7 +113,7 @@ class OutletHomePage extends StatelessWidget {
                 title: Text(context.strings.power),
                 value: power,
                 onChanged: (bool value) {
-                  // TODO: call rpc method
+                  device.setPower(value);
                 },
               ),
               ListTile(

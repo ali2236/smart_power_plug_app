@@ -1,5 +1,6 @@
 import 'package:custom_smart_power_plug_app/l10n/strings.dart';
 import 'package:custom_smart_power_plug_app/pages/page_outlet_home.dart';
+import 'package:custom_smart_power_plug_app/pages/page_outlet_schedules.dart';
 import 'package:flutter/material.dart';
 import 'package:thingsboard_client/thingsboard_client.dart';
 
@@ -21,30 +22,30 @@ class _OutletPageState extends State<OutletPage> {
       body: [
         (ctx) => OutletHomePage(device: widget.device),
         (ctx) => Container(),
-        (ctx) => Container(),
+        (ctx) => OutletSchedulesPage(device: widget.device),
         (ctx) => Container(),
       ][_index](context),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _index,
-        onTap: (newIndex) {
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _index,
+        onDestinationSelected: (newIndex) {
           setState(() {
             _index = newIndex;
           });
         },
-        items: [
-          BottomNavigationBarItem(
+        destinations: [
+          NavigationDestination(
             icon: const Icon(Icons.home_rounded),
             label: context.strings.home,
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: const Icon(Icons.bar_chart_rounded),
             label: context.strings.charts,
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: const Icon(Icons.alarm_rounded),
             label: context.strings.schedules,
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: const Icon(Icons.settings_rounded),
             label: context.strings.settings,
           ),

@@ -14,5 +14,18 @@
   "settings" : "Settings",
   "realtime" : "Real-Time",
   "power" : "Power",
-  "maxCurrent" : "Max Current"
+  "maxCurrent" : "Max Current",
+  "schedule" : "Schedule",
+  "name" : "Name",
+  "time" : "Time",
+  "weekday_1_short" : "Sat",
+  "weekday_2_short" : "Sun",
+  "weekday_3_short" : "Mon",
+  "weekday_4_short" : "Tue",
+  "weekday_5_short" : "Wed",
+  "weekday_6_short" : "Thr",
+  "weekday_7_short" : "Fri",
+  "required_field" : "This field is required!",
+  "on" : "On",
+  "off" : "Off"
 }

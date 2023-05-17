@@ -1,5 +1,7 @@
 import 'package:custom_smart_power_plug_app/l10n/strings.dart';
 import 'package:custom_smart_power_plug_app/models/extension_device.dart';
+import 'package:custom_smart_power_plug_app/services/service_loading.dart';
+import 'package:custom_smart_power_plug_app/widgets/widget_bar_loading.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_device_telemetry.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -33,6 +35,7 @@ class OutletHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(device.name),
+        bottom: const LoadingBar(),
       ),
       body: DeviceTelemetry(
         device: device,
@@ -113,7 +116,9 @@ class OutletHomePage extends StatelessWidget {
                 title: Text(context.strings.power),
                 value: power,
                 onChanged: (bool value) {
-                  device.setPower(value);
+                  GetIt.I
+                      .get<LoadingService>()
+                      .addTask(task: device.setPower(value));
                 },
               ),
               ListTile(

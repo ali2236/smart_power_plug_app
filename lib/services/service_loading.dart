@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-class LoadingService with ChangeNotifier{
+class LoadingService with ChangeNotifier {
   var _loading = false;
 
   bool get loading => _loading;
 
   Future addTask<T>({
     required Future<T> task,
-    required void Function(T data) onSuccess,
-    required void Function(String error) onFail,
+    void Function(T data)? onSuccess,
+    void Function(String error)? onFail,
   }) async {
     _loading = true;
     notifyListeners();
     try {
       final result = await task;
-      onSuccess(result);
-    } catch (e){
-      onFail(e.toString());
+      if(onSuccess != null) onSuccess(result);
+    } catch (e) {
+      if(onFail != null) onFail(e.toString());
     } finally {
       _loading = false;
       notifyListeners();

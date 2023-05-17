@@ -32,12 +32,10 @@ class SchedulesService with ChangeNotifier {
     notifyListeners();
   }
 
-  void syncSchedules(Device device){
+  void syncSchedules(Device device) {
     GetIt.I.get<LoadingService>().addTask(
-      task: _syncSchedules(device),
-      onSuccess: (d) {},
-      onFail: (err) {},
-    );
+          task: _syncSchedules(device),
+        );
   }
 
   Future<void> _syncSchedules(Device device) {

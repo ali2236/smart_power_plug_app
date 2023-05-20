@@ -3,6 +3,7 @@ import 'package:custom_smart_power_plug_app/models/extension_device.dart';
 import 'package:custom_smart_power_plug_app/services/service_loading.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_bar_loading.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_device_telemetry.dart';
+import 'package:custom_smart_power_plug_app/widgets/widget_no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:thingsboard_client/thingsboard_client.dart';
@@ -31,7 +32,7 @@ class OutletHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _selected = ValueNotifier(_DisplayData.watt);
+    final selected = ValueNotifier(_DisplayData.watt);
     return Scaffold(
       appBar: AppBar(
         title: Text(device.name),
@@ -40,6 +41,9 @@ class OutletHomePage extends StatelessWidget {
       body: DeviceTelemetry(
         device: device,
         builder: (context, data) {
+          if(data.isEmpty){
+            return const NoData();
+          }
           final powerRaw = data.firstWhere((at) => at.key == 'power').value;
           final power = powerRaw == 'true';
           final watt = data.firstWhere((at) => at.key == 'wattage').value;
@@ -56,7 +60,7 @@ class OutletHomePage extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.secondaryContainer),
                 child: AnimatedBuilder(
-                  animation: _selected,
+                  animation: selected,
                   builder: (context, _) {
                     return SizedBox(
                       height: 360,
@@ -72,8 +76,8 @@ class OutletHomePage extends StatelessWidget {
                           Expanded(
                             child: Center(
                               child: Text(
-                                dataSelector[_selected.value] +
-                                    ' ${_selected.value.sign}',
+                                dataSelector[selected.value] +
+                                    ' ${selected.value.sign}',
                                 style:
                                     Theme.of(context).textTheme.displayMedium,
                               ),
@@ -86,13 +90,13 @@ class OutletHomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 for (var d in _DisplayData.values)
-                                  _selected.value == d
+                                  selected.value == d
                                       ? Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: FilledButton(
                                             child: Text(d.name),
                                             onPressed: () =>
-                                                _selected.value = d,
+                                                selected.value = d,
                                           ),
                                         )
                                       : Padding(
@@ -100,7 +104,7 @@ class OutletHomePage extends StatelessWidget {
                                           child: ElevatedButton(
                                             child: Text(d.name),
                                             onPressed: () =>
-                                                _selected.value = d,
+                                                selected.value = d,
                                           ),
                                         ),
                               ],

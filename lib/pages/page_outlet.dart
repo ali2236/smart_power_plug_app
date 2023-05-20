@@ -1,5 +1,7 @@
 import 'package:custom_smart_power_plug_app/l10n/strings.dart';
+import 'package:custom_smart_power_plug_app/pages/page_outlet_charts.dart';
 import 'package:custom_smart_power_plug_app/pages/page_outlet_home.dart';
+import 'package:custom_smart_power_plug_app/pages/page_outlet_info.dart';
 import 'package:custom_smart_power_plug_app/pages/page_outlet_schedules.dart';
 import 'package:flutter/material.dart';
 import 'package:thingsboard_client/thingsboard_client.dart';
@@ -21,9 +23,9 @@ class _OutletPageState extends State<OutletPage> {
     return Scaffold(
       body: [
         (ctx) => OutletHomePage(device: widget.device),
-        (ctx) => Container(),
+        (ctx) => OutletChartsPage(device: widget.device),
         (ctx) => OutletSchedulesPage(device: widget.device),
-        (ctx) => Container(),
+        (ctx) => OutletInfoPage(device: widget.device),
       ][_index](context),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
@@ -46,8 +48,8 @@ class _OutletPageState extends State<OutletPage> {
             label: context.strings.schedules,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.settings_rounded),
-            label: context.strings.settings,
+            icon: const Icon(Icons.info_outline),
+            label: context.strings.info,
           ),
         ],
       ),

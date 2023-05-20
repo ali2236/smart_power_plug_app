@@ -27,5 +27,11 @@
   "weekday_7_short" : "Fri",
   "required_field" : "This field is required!",
   "on" : "On",
-  "off" : "Off"
+  "off" : "Off",
+  "noData" : "No Data",
+  "watt" : "Watt",
+  "current" : "Current",
+  "voltage" : "Voltage",
+  "info" : "Info",
+  "information" : "Information"
 }

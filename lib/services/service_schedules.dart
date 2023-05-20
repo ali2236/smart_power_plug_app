@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:custom_smart_power_plug_app/models/extension_device.dart';
 import 'package:custom_smart_power_plug_app/models/scheduled_task.dart';
 import 'package:custom_smart_power_plug_app/services/service_loading.dart';
@@ -7,20 +9,23 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:thingsboard_client/thingsboard_client.dart';
 
 class SchedulesService with ChangeNotifier {
-  late final Box<Map<String, dynamic>> _store;
+  late final Box<String> _store;
 
   Future<void> init() async {
-    _store = await Hive.openBox('schedules');
+    _store = await Hive.openBox('schedules_v1');
   }
 
   void addSchedule(Device device, OutletScheduledTask task) {
-    _store.add(task.toJson());
+    _store.add(jsonEncode(task.toJson()));
     syncSchedules(device);
     notifyListeners();
   }
 
-  List<OutletScheduledTask> get schedules =>
-      _store.values.map(OutletScheduledTask.fromJson).toList();
+  List<OutletScheduledTask> get schedules => _store.values
+      .map(jsonDecode)
+      .cast<Map<String, dynamic>>()
+      .map(OutletScheduledTask.fromJson)
+      .toList();
 
   List<OutletScheduledTask> getSchedules(Device device) =>
       schedules.where((sch) => sch.deviceId == device.id?.id).toList();

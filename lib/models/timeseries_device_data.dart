@@ -31,6 +31,7 @@ class TimeSeriesOutletData with ChangeNotifier implements OutletData {
           double.parse(newData.firstWhere((at) => at.key == 'voltage').value);
       final ts = newData.firstWhere((at) => at.key == 'current').lastUpdateTs!;
       _data.add(OutletData(ts, watt, amp, volt));
+      if(_data.length > 80) _data.removeAt(0);
     }
 
     notifyListeners();

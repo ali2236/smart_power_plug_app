@@ -89,10 +89,12 @@ class _OutletChart extends StatelessWidget {
                 ),
                 lineBarsData: [
                   LineChartBarData(
+                    color: Theme.of(context).colorScheme.primary,
                     spots: data,
                   )
                 ],
               ),
+              swapAnimationDuration: Duration.zero,
             ),
           ),
         ],

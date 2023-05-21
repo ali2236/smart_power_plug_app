@@ -29,7 +29,7 @@
   "on" : "On",
   "off" : "Off",
   "noData" : "No Data",
-  "watt" : "Watt",
+  "watt" : "Energy",
   "current" : "Current",
   "voltage" : "Voltage",
   "info" : "Info",

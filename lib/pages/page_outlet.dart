@@ -3,6 +3,7 @@ import 'package:custom_smart_power_plug_app/pages/page_outlet_charts.dart';
 import 'package:custom_smart_power_plug_app/pages/page_outlet_home.dart';
 import 'package:custom_smart_power_plug_app/pages/page_outlet_info.dart';
 import 'package:custom_smart_power_plug_app/pages/page_outlet_schedules.dart';
+import 'package:custom_smart_power_plug_app/widgets/widget_outlet_timeseries.dart';
 import 'package:flutter/material.dart';
 import 'package:thingsboard_client/thingsboard_client.dart';
 
@@ -21,12 +22,17 @@ class _OutletPageState extends State<OutletPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: [
-        (ctx) => OutletHomePage(device: widget.device),
-        (ctx) => OutletChartsPage(device: widget.device),
-        (ctx) => OutletSchedulesPage(device: widget.device),
-        (ctx) => OutletInfoPage(device: widget.device),
-      ][_index](context),
+      body: OutletTimeSeries(
+          device: widget.device,
+          builder: (context, timeSeries) {
+            return [
+              (ctx) =>
+                  OutletHomePage(device: widget.device, timeSeries: timeSeries),
+              (ctx) => OutletChartsPage(device: widget.device, timeSeries: timeSeries),
+              (ctx) => OutletSchedulesPage(device: widget.device),
+              (ctx) => OutletInfoPage(device: widget.device),
+            ][_index](context);
+          }),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: (newIndex) {

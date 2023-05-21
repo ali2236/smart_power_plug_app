@@ -1,5 +1,6 @@
 import 'package:custom_smart_power_plug_app/l10n/strings.dart';
 import 'package:custom_smart_power_plug_app/models/extension_device.dart';
+import 'package:custom_smart_power_plug_app/models/timeseries_device_data.dart';
 import 'package:custom_smart_power_plug_app/services/service_loading.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_bar_loading.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_device_telemetry.dart';
@@ -27,8 +28,13 @@ enum _DisplayData {
 
 class OutletHomePage extends StatelessWidget {
   final Device device;
+  final TimeSeriesOutletData timeSeries;
 
-  const OutletHomePage({Key? key, required this.device}) : super(key: key);
+  const OutletHomePage({
+    Key? key,
+    required this.device,
+    required this.timeSeries,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +44,16 @@ class OutletHomePage extends StatelessWidget {
         title: Text(device.name),
         bottom: const LoadingBar(),
       ),
-      body: DeviceTelemetry(
-        device: device,
-        builder: (context, data) {
-          if(data.isEmpty){
+      body: AnimatedBuilder(
+        animation: timeSeries,
+        builder: (context, _) {
+          if (!timeSeries.hasData) {
             return const NoData();
           }
-          final powerRaw = data.firstWhere((at) => at.key == 'power').value;
-          final power = powerRaw == 'true';
-          final watt = data.firstWhere((at) => at.key == 'wattage').value;
-          final amp = data.firstWhere((at) => at.key == 'current').value;
-          final volt = data.firstWhere((at) => at.key == 'voltage').value;
           final dataSelector = {
-            _DisplayData.watt: watt,
-            _DisplayData.amp: amp,
-            _DisplayData.volt: volt,
+            _DisplayData.watt: timeSeries.watt,
+            _DisplayData.amp: timeSeries.current,
+            _DisplayData.volt: timeSeries.voltage,
           };
           return ListView(
             children: [
@@ -76,8 +77,7 @@ class OutletHomePage extends StatelessWidget {
                           Expanded(
                             child: Center(
                               child: Text(
-                                dataSelector[selected.value] +
-                                    ' ${selected.value.sign}',
+                                '${dataSelector[selected.value]} ${selected.value.sign}',
                                 style:
                                     Theme.of(context).textTheme.displayMedium,
                               ),
@@ -95,16 +95,14 @@ class OutletHomePage extends StatelessWidget {
                                           padding: const EdgeInsets.all(4.0),
                                           child: FilledButton(
                                             child: Text(d.name),
-                                            onPressed: () =>
-                                                selected.value = d,
+                                            onPressed: () => selected.value = d,
                                           ),
                                         )
                                       : Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: ElevatedButton(
                                             child: Text(d.name),
-                                            onPressed: () =>
-                                                selected.value = d,
+                                            onPressed: () => selected.value = d,
                                           ),
                                         ),
                               ],
@@ -118,7 +116,7 @@ class OutletHomePage extends StatelessWidget {
               ),
               SwitchListTile(
                 title: Text(context.strings.power),
-                value: power,
+                value: timeSeries.power,
                 onChanged: (bool value) {
                   GetIt.I
                       .get<LoadingService>()

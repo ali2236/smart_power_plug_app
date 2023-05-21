@@ -6,10 +6,15 @@ import 'package:thingsboard_client/thingsboard_client.dart';
 class TimeSeriesOutletData with ChangeNotifier implements OutletData {
   final List<OutletData> _data = [];
   bool _power = false;
+  double _maxCurrent = 10.0;
 
   void add(List<AttributeData> newData) {
     final labels = newData.map((ad) => ad.key);
     // client attr
+    if(labels.contains('max_current')){
+      final maxCurrentRaw = newData.firstWhere((at) => at.key == "max_current").value;
+      _maxCurrent = double.parse(maxCurrentRaw);
+    }
     if (labels.contains('power')) {
       final powerRaw = newData
           .firstWhere(
@@ -42,6 +47,8 @@ class TimeSeriesOutletData with ChangeNotifier implements OutletData {
   OutletData get last => _data.last;
 
   bool get power => _power;
+
+  double get maxCurrent => _maxCurrent;
 
   @override
   double get current => last.current;

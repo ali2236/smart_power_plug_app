@@ -16,4 +16,9 @@ extension DeviceRPC on Device {
         'method': 'setSchedules',
         'params': schedules,
       });
+
+  Future<void> setMaxCurrent(double maxCurrent) => callRPC({
+    'method' : 'setMaxCurrent',
+    'params' : maxCurrent,
+  });
 }

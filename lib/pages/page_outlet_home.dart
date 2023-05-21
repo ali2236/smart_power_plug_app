@@ -3,9 +3,9 @@ import 'package:custom_smart_power_plug_app/models/extension_device.dart';
 import 'package:custom_smart_power_plug_app/models/timeseries_device_data.dart';
 import 'package:custom_smart_power_plug_app/services/service_loading.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_bar_loading.dart';
-import 'package:custom_smart_power_plug_app/widgets/widget_device_telemetry.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_no_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:thingsboard_client/thingsboard_client.dart';
 
@@ -125,6 +125,66 @@ class OutletHomePage extends StatelessWidget {
               ),
               ListTile(
                 title: Text(context.strings.maxCurrent),
+                subtitle: Text(timeSeries.maxCurrent.toStringAsFixed(1)),
+                onTap: () {
+                  showDialog<double>(
+                    context: context,
+                    builder: (context) {
+                      final maxCurrentController = TextEditingController(text: timeSeries.maxCurrent.toStringAsFixed(1));
+                      final formKey = GlobalKey<FormState>();
+                      return SimpleDialog(
+                        title: Text(context.strings.maxCurrent),
+                        children: [
+                          Form(
+                            key: formKey,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: TextFormField(
+                                controller: maxCurrentController,
+                                textDirection: TextDirection.ltr,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'[0-9.]+'))
+                                ],
+                                decoration: InputDecoration(
+                                    label: Text(context.strings.maxCurrent)),
+                                validator: (input) {
+                                  if (input == null || input.isEmpty) {
+                                    return context.strings.required_field;
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          ButtonBar(
+                            children: [
+                              FilledButton(
+                                child: Text(context.strings.save),
+                                onPressed: () {
+                                  if (formKey.currentState?.validate() ??
+                                      false) {
+                                    Navigator.of(context).pop(
+                                      double.tryParse(
+                                        maxCurrentController.text,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ).then((value) {
+                    if (value != null) {
+                      GetIt.I.get<LoadingService>().addTask(
+                            task: device.setMaxCurrent(value),
+                          );
+                    }
+                  });
+                },
               ),
             ],
           );

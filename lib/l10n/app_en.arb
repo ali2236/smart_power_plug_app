@@ -33,5 +33,6 @@
   "current" : "Current",
   "voltage" : "Voltage",
   "info" : "Info",
-  "information" : "Information"
+  "information" : "Information",
+  "save" : "Save"
 }

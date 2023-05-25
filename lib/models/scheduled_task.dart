@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 // format: "{"power":true,"weekdays":"1001101","time":"22:30"}"
 class OutletScheduledTask {
-  final String id;
-  final String deviceId;
   final String name;
   final bool power;
   final int hour;
@@ -12,8 +10,6 @@ class OutletScheduledTask {
   final WeekDays weekDays;
 
   const OutletScheduledTask({
-    required this.id,
-    required this.deviceId,
     required this.name,
     required this.hour,
     required this.minute,
@@ -23,8 +19,6 @@ class OutletScheduledTask {
 
   factory OutletScheduledTask.fromJson(Map<String, dynamic> json) {
     return OutletScheduledTask(
-      id: json['id'],
-      deviceId: json['deviceId'],
       name: json['name'],
       hour: json['hour'],
       minute: json['minute'],
@@ -36,11 +30,9 @@ class OutletScheduledTask {
   String get time =>
       '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
 
-  Map<String, dynamic> toJson({bool forDevice = false}) {
+  Map<String, dynamic> toJson() {
     return {
-      if (!forDevice) 'id': id,
-      if (!forDevice) 'deviceId': deviceId,
-      if (!forDevice) 'name': name,
+      'name': name,
       'power': power,
       'weekdays': weekDays.toString(),
       "hour": hour,

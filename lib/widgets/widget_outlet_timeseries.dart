@@ -19,11 +19,12 @@ class OutletTimeSeries extends StatefulWidget {
 class _OutletTimeSeriesState extends State<OutletTimeSeries> {
   late final TelemetrySubscriber subscriber1;
   late final TelemetrySubscriber subscriber2;
-  final data = TimeSeriesOutletData();
+  late final TimeSeriesOutletData data;
 
   @override
   void initState() {
     super.initState();
+    data = TimeSeriesOutletData(widget.device);
     final client = GetIt.I.get<ThingsboardClient>();
     subscriber1 = TelemetrySubscriber.createEntityAttributesSubscription(
       telemetryService: client.getTelemetryService(),

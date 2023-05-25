@@ -3,7 +3,6 @@ import 'package:custom_smart_power_plug_app/models/scheduled_task.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_weekdays_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:thingsboard_client/thingsboard_client.dart';
-import 'package:uuid/uuid.dart';
 
 class NewOutletSchedulePage extends StatefulWidget {
   final Device device;
@@ -89,8 +88,6 @@ class _NewOutletSchedulePageState extends State<NewOutletSchedulePage> {
           if (formKey.currentState?.validate() ?? false) {
             Navigator.of(context).pop(
               OutletScheduledTask(
-                id: const Uuid().v4(),
-                deviceId: widget.device.id!.id!,
                 name: name.text,
                 hour: time.hour,
                 minute: time.minute,

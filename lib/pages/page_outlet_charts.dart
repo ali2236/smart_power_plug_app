@@ -1,18 +1,14 @@
 import 'package:custom_smart_power_plug_app/l10n/strings.dart';
 import 'package:custom_smart_power_plug_app/models/timeseries_device_data.dart';
-import 'package:custom_smart_power_plug_app/widgets/widget_device_telemetry.dart';
 import 'package:custom_smart_power_plug_app/widgets/widget_no_data.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:thingsboard_client/thingsboard_client.dart';
 
 class OutletChartsPage extends StatelessWidget {
-  final Device device;
   final TimeSeriesOutletData timeSeries;
 
   const OutletChartsPage({
     Key? key,
-    required this.device,
     required this.timeSeries,
   }) : super(key: key);
 

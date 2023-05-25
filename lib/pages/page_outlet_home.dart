@@ -7,7 +7,6 @@ import 'package:custom_smart_power_plug_app/widgets/widget_no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:thingsboard_client/thingsboard_client.dart';
 
 enum _DisplayData {
   amp,
@@ -27,12 +26,10 @@ enum _DisplayData {
 }
 
 class OutletHomePage extends StatelessWidget {
-  final Device device;
   final TimeSeriesOutletData timeSeries;
 
   const OutletHomePage({
     Key? key,
-    required this.device,
     required this.timeSeries,
   }) : super(key: key);
 
@@ -41,7 +38,7 @@ class OutletHomePage extends StatelessWidget {
     final selected = ValueNotifier(_DisplayData.watt);
     return Scaffold(
       appBar: AppBar(
-        title: Text(device.name),
+        title: Text(timeSeries.device.name),
         bottom: const LoadingBar(),
       ),
       body: AnimatedBuilder(
@@ -120,7 +117,7 @@ class OutletHomePage extends StatelessWidget {
                 onChanged: (bool value) {
                   GetIt.I
                       .get<LoadingService>()
-                      .addTask(task: device.setPower(value));
+                      .addTask(task: timeSeries.device.setPower(value));
                 },
               ),
               ListTile(
@@ -130,7 +127,8 @@ class OutletHomePage extends StatelessWidget {
                   showDialog<double>(
                     context: context,
                     builder: (context) {
-                      final maxCurrentController = TextEditingController(text: timeSeries.maxCurrent.toStringAsFixed(1));
+                      final maxCurrentController = TextEditingController(
+                          text: timeSeries.maxCurrent.toStringAsFixed(1));
                       final formKey = GlobalKey<FormState>();
                       return SimpleDialog(
                         title: Text(context.strings.maxCurrent),
@@ -144,7 +142,8 @@ class OutletHomePage extends StatelessWidget {
                                 textDirection: TextDirection.ltr,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
-                                      RegExp(r'[0-9.]+'))
+                                    RegExp(r'[0-9.]+'),
+                                  )
                                 ],
                                 decoration: InputDecoration(
                                     label: Text(context.strings.maxCurrent)),
@@ -180,7 +179,7 @@ class OutletHomePage extends StatelessWidget {
                   ).then((value) {
                     if (value != null) {
                       GetIt.I.get<LoadingService>().addTask(
-                            task: device.setMaxCurrent(value),
+                            task: timeSeries.device.setMaxCurrent(value),
                           );
                     }
                   });

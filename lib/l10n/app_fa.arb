@@ -33,5 +33,6 @@
   "current" :  "جریان",
   "voltage" :  "ولتاژ",
   "info" :  "درباره",
-  "information" : "اطلاعات"
+  "information" : "اطلاعات",
+  "save" : "ذخیره"
 }

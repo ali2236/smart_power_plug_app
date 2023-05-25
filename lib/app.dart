@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           border: OutlineInputBorder(),
         )
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/' : (c) => const DevicesPage(),

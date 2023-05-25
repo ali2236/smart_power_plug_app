@@ -27,9 +27,9 @@ class _OutletPageState extends State<OutletPage> {
           builder: (context, timeSeries) {
             return [
               (ctx) =>
-                  OutletHomePage(device: widget.device, timeSeries: timeSeries),
-              (ctx) => OutletChartsPage(device: widget.device, timeSeries: timeSeries),
-              (ctx) => OutletSchedulesPage(device: widget.device),
+                  OutletHomePage(timeSeries: timeSeries),
+              (ctx) => OutletChartsPage( timeSeries: timeSeries),
+              (ctx) => OutletSchedulesPage(timeSeries: timeSeries),
               (ctx) => OutletInfoPage(device: widget.device),
             ][_index](context);
           }),

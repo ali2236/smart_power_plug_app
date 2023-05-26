@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       locale: const Locale('en'),
       theme: ThemeData(
         useMaterial3: true,
-        // fontFamily: 'yekan',
+        fontFamily: 'IranYekanX',
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(),
         )

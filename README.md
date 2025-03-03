@@ -1,16 +1,10 @@
 # custom_smart_power_plug_app
 
-A new Flutter project.
+A Small Flutter App to Controll Smart Power Plugs Through ThingsHub
 
-## Getting Started
+Report:
+[Smart Power Plug - V2.pdf](https://github.com/user-attachments/files/19053312/Smart.Power.Plug.-.V2.pdf)
 
-This project is a starting point for a Flutter application.
+App Video:
+https://github.com/user-attachments/assets/4e925ced-b862-4534-b801-b0ae146598f0
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

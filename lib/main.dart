@@ -19,7 +19,7 @@ void main() async {
     ..registerSingleton(DevicesService());
 
   await getIt.get<ThingsboardClient>().login(
-    LoginRequest('Ali.gh2236@gmail.com', '14La%0YSh4dg'),
+    LoginRequest(String.fromEnvironment("username"), String.fromEnvironment("password")),
   );
   await getIt.get<DevicesService>().init();
 
